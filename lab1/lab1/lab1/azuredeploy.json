@@ -4,7 +4,7 @@
     "parameters": {
         "storageAccountPrefix": {
             "type": "string",
-            "defaultValue": "Monkoventst",
+            "defaultValue": "monkoventst",
             "maxLength": 24,
             "metadata": {
                 "description": "Prefix Name for Storage Account"
