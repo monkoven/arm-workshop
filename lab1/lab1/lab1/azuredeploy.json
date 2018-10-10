@@ -1,19 +1,42 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
-    "variables": {},
+    "parameters": {
+        "storageAccountPrefix": {
+            "type": "string",
+            "defaultValue": "Monkoventst",
+            "maxLength": 24,
+            "metadata": {
+                "description": "Prefix Name for Storage Account"
+            }
+        },
+        "accountType": {
+            "type": "string",
+            "defaultvalue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS",
+                "Standard_RAGRS"
+            ],
+            "metadata": {
+                "description": "SKU for the storage account"
+            }
+        }
+    },
+    "variables": {
+        "storageAccount": "[toLower(concat(parameters('storageAccountPrefix'), uniqueString( resourceGroup().id )))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "Monkoven",
+            "name": "[variables('storageAccount')]",
             "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "Monkoven"
+                "displayName": "[variables('storageAccount')]"
             },
             "properties": {
-                "accountType": "Standard_LRS"
+                "accountType": "[parameters('accountType')]"
             }
         }
     ],
